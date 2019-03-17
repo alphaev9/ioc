@@ -1,0 +1,3 @@
+{"_id":{"$oid":"5c8e27ba5f18870c84570604"},"book":{"author":"alpha","title":"spring ioc","press":"crc"}}
+{"_id":{"$oid":"5c8e27ec5f18870c84570605"},"book":{"author":"apple","title":"c# technology","press":"microsoft"}}
+{"_id":{"$oid":"5c8e28245f18870c84570606"},"book":{"author":"alpha","title":"hiberate","press":"apache press"}}
