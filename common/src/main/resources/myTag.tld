@@ -10,7 +10,7 @@
     <uri>http://alpha.com</uri>
     <tag>
         <name>myTable</name>
-        <tag-class>com.alpha.ioc.common.util.Table</tag-class>
+        <tag-class>com.alpha.ioc.common.taglib.Table</tag-class>
         <body-content>JSP</body-content>
         <attribute>
             <name>items</name>

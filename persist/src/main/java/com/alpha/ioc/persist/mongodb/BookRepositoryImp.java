@@ -1,5 +1,8 @@
 package com.alpha.ioc.persist.mongodb;
 
+import com.alpha.ioc.di.annotation.Component;
+import com.alpha.ioc.di.annotation.Inject;
+import com.alpha.ioc.di.annotation.Profile;
 import com.alpha.ioc.domain.Book;
 import com.alpha.ioc.domain.BookRepository;
 import com.mongodb.BasicDBObject;
@@ -11,7 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+@Component
+@Profile("mongodb")
 public class BookRepositoryImp implements BookRepository {
+    @Inject
     private DataSource dataSource;
 
     @Override
@@ -20,7 +26,7 @@ public class BookRepositoryImp implements BookRepository {
         BasicDBObject filter = new BasicDBObject("book.author", author);
         FindIterable<Book> books = collection.find(filter, Book.class);
         List<Book> bookList = new ArrayList<>();
-        books.forEach((Consumer<? super Book>) book ->bookList.add(book));
+        books.forEach((Consumer<? super Book>) book -> bookList.add(book));
         return bookList;
     }
 

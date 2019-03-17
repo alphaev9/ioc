@@ -1,12 +1,15 @@
 package com.alpha.ioc.persist.mongodb;
 
+import com.alpha.ioc.di.annotation.Component;
+import com.alpha.ioc.di.annotation.Profile;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
-
+@Component
+@Profile("mongodb")
 public class DataSource {
     private String databaseName;
 

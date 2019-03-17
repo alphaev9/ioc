@@ -1,6 +1,8 @@
 package com.alpha.ioc.web;
 
 
+import com.alpha.ioc.common.di.Component;
+import com.alpha.ioc.di.annotation.Inject;
 import com.alpha.ioc.domain.Book;
 import com.alpha.ioc.domain.BookRepository;
 import com.alpha.ioc.domain.BookService;
@@ -18,8 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "BookQuery", urlPatterns = "/query", initParams = {@WebInitParam(name = "db.config", value = "db.properties")})
+@Component
 public class BookQuery extends HttpServlet {
-    private BookService bookService = new BookService();
+    @Inject
+    private BookService bookService;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

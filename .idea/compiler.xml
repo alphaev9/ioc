@@ -9,6 +9,7 @@
         <module name="1_webapp" />
         <module name="2_cmdapp" />
         <module name="common" />
+        <module name="di" />
         <module name="domain" />
         <module name="persist" />
       </profile>
@@ -24,6 +25,7 @@
       <module name="1_webapp" options="" />
       <module name="2_cmdapp" options="" />
       <module name="common" options="" />
+      <module name="di" options="" />
       <module name="domain" options="" />
       <module name="ioc" options="" />
       <module name="persist" options="" />

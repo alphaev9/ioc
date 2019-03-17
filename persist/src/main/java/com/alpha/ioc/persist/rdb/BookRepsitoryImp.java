@@ -1,5 +1,8 @@
 package com.alpha.ioc.persist.rdb;
 
+import com.alpha.ioc.di.annotation.Component;
+import com.alpha.ioc.di.annotation.Inject;
+import com.alpha.ioc.di.annotation.Profile;
 import com.alpha.ioc.domain.Book;
 import com.alpha.ioc.domain.BookRepository;
 
@@ -9,8 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+@Component
+@Profile("rdb")
 public class BookRepsitoryImp implements BookRepository {
+    @Inject
     private DataSource dataSource;
 
     @Override
