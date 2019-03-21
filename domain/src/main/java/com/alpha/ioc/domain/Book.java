@@ -1,6 +1,15 @@
 package com.alpha.ioc.domain;
 
 public class Book {
+    public Book() {
+    }
+
+    public Book(String author, String title, String press) {
+        this.author = author;
+        this.title = title;
+        this.press = press;
+    }
+
     private Long id;
 
     public Long getId() {
