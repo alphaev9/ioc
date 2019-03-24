@@ -3,31 +3,24 @@ package com.alpha.ioc.cmdapp;
 
 import com.alpha.ioc.di.IocContainer;
 import com.alpha.ioc.domain.Book;
-import com.alpha.ioc.domain.BookRepository;
 import com.alpha.ioc.domain.BookService;
-import com.alpha.ioc.persist.mongodb.BookRepositoryImp;
-import com.alpha.ioc.persist.mongodb.DataSource;
-import com.alpha.ioc.persist.rdb.BookRepsitoryImp;
-import com.alpha.ioc.persist.rdb.DataSourceFactory;
 
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 
 public class BooksApp {
-    public static void main(String[] args) {
-        /*IocContainer iocContainer=new IocContainer();
-        iocContainer.initialize();
+    public static void main(String[] args) throws URISyntaxException {
+        IocContainer iocContainer = new IocContainer();
+        URL root = BooksApp.class.getProtectionDomain().getCodeSource().getLocation();
+        System.out.println(root);
 
-        DataSource dataSource = new DataSource("ioc");
-        BookRepository bookRepository = new BookRepositoryImp();
-        ((BookRepositoryImp) bookRepository).setDataSource(dataSource);
-
-
-        BookService bookService = new BookService();
-        bookService.setBookRepository(bookRepository);
-
+        iocContainer.initialize(new File(root.toURI()));
+        BookService bookService = (BookService) iocContainer.getComponent(BookService.class);
 
         List<Book> books = bookService.queryByAuthor(args[0]);
 
         books.forEach(book -> System.out.println(book.getTitle() + "   " + book.getPress()));
-    */}
+    }
 }

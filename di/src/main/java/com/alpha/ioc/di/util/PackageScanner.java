@@ -69,6 +69,11 @@ public class PackageScanner {
     }
 
     private static void getPath(File baseDir, Set<String> set) {
+        String baseDirPath = baseDir.getPath();
+        if(baseDirPath.endsWith("jar")){
+            set.add(baseDirPath);
+            return;
+        }
         File[] files = baseDir.listFiles();
         for (File file : files) {
             if (file.isFile()) {
@@ -91,21 +96,10 @@ public class PackageScanner {
         while (jarEntries.hasMoreElements()) {
             JarEntry jarEntry = jarEntries.nextElement();
             String jarName = jarEntry.getName();
-            if (jarEntry.isDirectory() || !jarName.endsWith(".class")) {
+            if (jarEntry.isDirectory() || !jarName.endsWith(".class") ||!jarName.startsWith("com/alpha")) {
                 continue;
             }
             String className = jarName.replace(".class", "").replaceAll("/", ".");
-            /*try {
-                Class<?> klass = Class.forName(className);
-                if (klass.isAnnotation()
-                        || klass.isInterface()
-                        || klass.isEnum()
-                        || klass.isPrimitive()) {
-                    continue;
-                }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }*/
             set.add(className);
         }
         return set;

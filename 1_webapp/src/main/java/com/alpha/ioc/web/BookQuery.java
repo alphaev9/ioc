@@ -20,10 +20,12 @@ import java.util.List;
 public class BookQuery extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String author = request.getParameter("author");
         ServletContext context = getServletContext();
         IocContainer iocContainer = (IocContainer) context.getAttribute("iocContainer");
         BookService bookService = (BookService) iocContainer.getComponent(BookService.class);
+
+        String author = request.getParameter("author");
+
         List<Book> books = bookService.queryByAuthor(author);
 
         request.setAttribute("author", author);
