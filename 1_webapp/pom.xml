@@ -47,16 +47,16 @@
             <artifactId>persist</artifactId>
             <version>1.0-SNAPSHOT</version>
             <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>mysql</groupId>-->
-                    <!--<artifactId>mysql-connector-java</artifactId>-->
-                <!--</exclusion>-->
+            <!--<exclusion>-->
+            <!--<groupId>mysql</groupId>-->
+            <!--<artifactId>mysql-connector-java</artifactId>-->
+            <!--</exclusion>-->
             <!--</exclusions>-->
         </dependency>
         <dependency>
-            <groupId>com.alpha.ioc</groupId>
-            <artifactId>di</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>RELEASE</version>
         </dependency>
 
 

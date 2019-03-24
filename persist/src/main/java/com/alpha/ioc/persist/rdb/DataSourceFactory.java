@@ -1,8 +1,5 @@
 package com.alpha.ioc.persist.rdb;
 
-import com.alpha.ioc.di.annotation.Factory;
-import com.alpha.ioc.di.annotation.Profile;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -10,8 +7,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-@Profile("rdb")
-@Factory(DataSource.class)
 public class DataSourceFactory {
     static public DataSource buildDataSorceFromProperties(String config) {
         InputStream resource = DataSourceFactory.class.getClassLoader().getResourceAsStream(config);

@@ -1,15 +1,14 @@
 package com.alpha.ioc.domain;
 
-import com.alpha.ioc.di.annotation.Component;
-import com.alpha.ioc.di.annotation.Inject;
-import com.alpha.ioc.di.annotation.Profile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class BookService {
-    @Inject
-    @Profile("mongodb")
+    @Autowired
     private BookRepository bookRepository;
 
     public List<Book> queryByAuthor(String author) {

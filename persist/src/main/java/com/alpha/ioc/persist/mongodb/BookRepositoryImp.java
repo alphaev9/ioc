@@ -1,23 +1,23 @@
 package com.alpha.ioc.persist.mongodb;
 
-import com.alpha.ioc.di.annotation.Component;
-import com.alpha.ioc.di.annotation.Inject;
-import com.alpha.ioc.di.annotation.Profile;
 import com.alpha.ioc.domain.Book;
 import com.alpha.ioc.domain.BookRepository;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-@Component
+@Repository
 @Profile("mongodb")
 public class BookRepositoryImp implements BookRepository {
-    @Inject
+    @Autowired
     private DataSource dataSource;
 
     @Override

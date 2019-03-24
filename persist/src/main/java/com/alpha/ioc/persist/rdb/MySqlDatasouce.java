@@ -1,7 +1,6 @@
 package com.alpha.ioc.persist.rdb;
 
-import com.alpha.ioc.di.annotation.Component;
-import com.alpha.ioc.di.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;

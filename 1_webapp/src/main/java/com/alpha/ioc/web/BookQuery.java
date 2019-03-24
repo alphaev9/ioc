@@ -1,13 +1,12 @@
 package com.alpha.ioc.web;
 
 
-import com.alpha.ioc.di.IocContainer;
 import com.alpha.ioc.domain.Book;
 import com.alpha.ioc.domain.BookService;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +19,11 @@ import java.util.List;
 public class BookQuery extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ServletContext context = getServletContext();
-        IocContainer iocContainer = (IocContainer) context.getAttribute("iocContainer");
-        BookService bookService = (BookService) iocContainer.getComponent(BookService.class);
+
+        WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
+
+        BookService bookService = context.getBean(BookService.class);
+
 
         String author = request.getParameter("author");
 
