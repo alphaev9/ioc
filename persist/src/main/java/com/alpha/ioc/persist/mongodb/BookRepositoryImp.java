@@ -7,15 +7,11 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-@Repository
-@Profile("mongodb")
 public class BookRepositoryImp implements BookRepository {
     @Autowired
     private DataSource dataSource;

@@ -8,10 +8,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="1_webapp" />
         <module name="2_cmdapp" />
+        <module name="beanfactory" />
+        <module name="cmdapp" />
         <module name="common" />
         <module name="di" />
         <module name="domain" />
         <module name="persist" />
+        <module name="webapp" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -24,11 +27,14 @@
       <module name="1_motive" options="" />
       <module name="1_webapp" options="" />
       <module name="2_cmdapp" options="" />
+      <module name="beanfactory" options="" />
+      <module name="cmdapp" options="" />
       <module name="common" options="" />
       <module name="di" options="" />
       <module name="domain" options="" />
       <module name="ioc" options="" />
       <module name="persist" options="" />
+      <module name="webapp" options="" />
     </option>
   </component>
 </project>

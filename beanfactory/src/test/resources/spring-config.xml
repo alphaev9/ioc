@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <bean id="car1" class="com.alpha.ioc.Car"></bean>
+
+    <bean id="car2" class="com.alpha.ioc.Car">
+        <constructor-arg>
+            <value>Golf</value>
+        </constructor-arg>
+        <constructor-arg>
+            <value>red</value>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="engine1"></ref>
+        </constructor-arg>
+    </bean>
+
+    <bean id="car3" class="com.alpha.ioc.Car"
+          c:brand="Buick"
+          c:color="black"
+          c:engine-ref="engine2">
+    </bean>
+
+    <bean id="engine1" class="com.alpha.ioc.Engine">
+        <property name="maxPower" value="300"></property>
+    </bean>
+
+    <bean id="engine2" class="com.alpha.ioc.Engine"
+          p:maxPower="400">
+    </bean>
+
+    <bean id="carFactory" class="com.alpha.ioc.CarFactory"></bean>
+
+    <bean id="car4" factory-bean="carFactory" factory-method="buildCar"></bean>
+
+    <bean id="car5" class="com.alpha.ioc.CarFactoryBean" p:carInfo="Buick,red,300"></bean>
+
+    <bean id="car6" class="com.alpha.ioc.Car"
+          c:_0="Buick"
+          c:_1="black"
+          c:_2-ref="engine2"
+          c:_3-ref="wheels"
+    >
+
+    </bean>
+    <util:list id="wheels" list-class="java.util.LinkedList">
+        <ref bean="left"></ref>
+        <ref bean="right"></ref>
+    </util:list>
+
+    <bean id="left" class="com.alpha.ioc.Wheel" p:position="left"></bean>
+    <bean id="right" class="com.alpha.ioc.Wheel" p:position="right"></bean>
+
+
+    <bean name="Golf" class="com.alpha.ioc.Car" scope="prototype"
+          p:brand="Golf" p:color="red"
+          p:engine-ref="engine3">
+    </bean>
+
+    <bean id="engine3" class="com.alpha.ioc.Engine" scope="prototype" p:maxPower="200"></bean>
+
+    <bean name="Ford" class="com.alpha.ioc.Car"
+          p:brand="Ford" p:color="red">
+        <lookup-method name="getEngine" bean="engine3"></lookup-method>
+    </bean>
+
+
+    <!--replace-method:intercept the designated method in a bean and replace it with your custom logic-->
+    <bean name="Buick" class="com.alpha.ioc.Car" scope="prototype"
+          p:brand="buick" p:color="metal"
+          p:engine-ref="engine3">
+        <replaced-method name="getColor" replacer="replacer"></replaced-method>
+    </bean>
+
+    <bean id="replacer" class="com.alpha.ioc.Replacer"></bean>
+
+    <!--inherited bean-->
+    <bean name="abstractCar" class="com.alpha.ioc.Car"
+          p:brand="Buick"
+          p:engine-ref="engine1">
+    </bean>
+
+    <bean name="redBuick" parent="abstractCar" p:color="red"></bean>
+    <bean name="blueBuick" parent="abstractCar" p:color="blue"></bean>
+
+    <!--
+    1、depend-on between beans
+    2、reference property of another bean using spEL
+    -->
+    <bean name="settings" class="com.alpha.ioc.CarBuilderSetting"
+          c:color="red" c:engine-ref="engine3">
+    </bean>
+    <bean name="toyota" class="com.alpha.ioc.Car" depends-on="settings"
+          p:brand="toyota"
+          p:color="#{settings.color}"
+          p:engine="#{settings.engine}">
+    </bean>
+
+
+    <!--
+    1、lifecycle method:spring ioc container provide bean's lifecycle callback
+    2、there are two callback point:one is triggered after all properties of bean being set,the other is before bean being destroyed
+    3、there are three ways to implement callbacks,illustrated by the case of post-initialize,you can use init-method attribute,initializingBean interface,or @PostConstruct annotation
+     -->
+    <bean name="nissan" class="com.alpha.ioc.Car"
+          p:brand="nissan" p:color="white"
+          p:engine-ref="engine3"
+          init-method="validate" destroy-method="dispose">
+    </bean>
+
+    <!--PostBeanProcessor:allow bean processing before and after bean initialization callback.
+    it has characteristic of processing all beans in ioc container,not just only single bean-->
+
+    <bean class="com.alpha.ioc.InspectorBeanPostProcessor"></bean>
+
+
+    <!--inject data from properties file:PropertySourcesPlaceholderConfigurer essentially is PostBeanProcessor.
+    given using annotation representing configuration metadata,@PropertySource has equal effect
+    -->
+    <context:property-placeholder location="car-description"></context:property-placeholder>
+    <!-- <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"
+           p:location="car-description">
+     </bean>-->
+    <bean name="ModeledCar" class="com.alpha.ioc.Car"
+          p:color="${car.color}" p:brand="${car.brand}" p:engine-ref="ModeledEngine">
+    </bean>
+    <bean name="ModeledEngine" class="com.alpha.ioc.Engine"
+          p:maxPower="${engine.maxPower}">
+    </bean>
+
+    <!--in general,you can inject data from any external source which almost means Environment.
+    in spring Environment interface abstracts the outside world of spring application running-->
+    <bean name="miniCar" class="com.alpha.ioc.Car" lazy-init="true"
+          p:brand="mini" p:color="red" p:engine-ref="${car.engine}"></bean>
+    <bean name="miniEngine" class="com.alpha.ioc.Engine" p:maxPower="100"></bean>
+
+    <!--aware capability:sometimes beans have to be aware of the spring container's resource.
+    even though this will introduce coupling between component and container-->
+
+    <bean name="manager" class="com.alpha.ioc.ManagerBean"></bean>
+    <bean name="worker" class="com.alpha.ioc.WorkerBean"></bean>
+
+    <!--PropertyEditor: this thinking can data back to javaBean occurrence time.
+    properties of javaBean are resolved by converting your input which is done through a visual editor.
+    essentially,string representation will be converted to certain java data type
+    -->
+    <bean name="newCar" class="com.alpha.ioc.Car"
+          p:productionDate="2018-01-01">
+    </bean>
+
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="customEditors">
+            <map>
+                <entry key="java.util.Date" value="com.alpha.ioc.DatePropertyEditor"></entry>
+            </map>
+        </property>
+    </bean>
+
+
+</beans>

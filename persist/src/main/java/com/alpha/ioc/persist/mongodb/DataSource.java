@@ -6,13 +6,17 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
-import org.springframework.stereotype.Component;
 
-@Component
 public class DataSource {
+    private String databaseName;
+
+    public DataSource(String database) {
+        this.databaseName = database;
+    }
+
     public MongoCollection<Document> getCollection(String collectionName) {
         MongoClient mongoClient = new MongoClient("localhost", 27017);
-        MongoDatabase database = mongoClient.getDatabase("ioc");
+        MongoDatabase database = mongoClient.getDatabase(databaseName);
         CodecRegistry codecRegistry = CodecRegistries.fromRegistries(
                 CodecRegistries.fromCodecs(new BookCodec()),
                 MongoClient.getDefaultCodecRegistry());

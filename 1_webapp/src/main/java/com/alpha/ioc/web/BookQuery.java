@@ -22,7 +22,7 @@ public class BookQuery extends HttpServlet {
 
         WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
 
-        BookService bookService = context.getBean(BookService.class);
+        BookService bookService = (BookService) context.getBean("bookService");
 
 
         String author = request.getParameter("author");
